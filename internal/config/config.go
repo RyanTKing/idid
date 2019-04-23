@@ -9,8 +9,10 @@ import (
 )
 
 const (
-	storageDir  = "storage_dir"
-	gitEndpoint = "git_endpoint"
+	storageDir     = "storage_dir"
+	githubEndpoint = "github.endpoint"
+	githubUsername = "github.username"
+	githubToken    = "github.token"
 )
 
 var (
@@ -31,7 +33,9 @@ func Get() *Config {
 	v.SetEnvPrefix("IDID")
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	v.SetDefault(storageDir, "~/.local/share/idid")
-	v.SetDefault(gitEndpoint, "https://github.com")
+	v.SetDefault(githubEndpoint, "https://github.com")
+	v.SetDefault(githubUsername, "")
+	v.SetDefault(githubToken, "")
 	v.AutomaticEnv()
 
 	cfg = &Config{}

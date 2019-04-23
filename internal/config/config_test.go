@@ -8,8 +8,10 @@ import (
 )
 
 const (
-	storageDirEnvVar  = "IDID_STORAGE_DIR"
-	gitEndpointEnvVar = "IDID_GIT_ENDPOINT"
+	storageDirEnvVar     = "IDID_STORAGE_DIR"
+	githubEndpointEnvVar = "IDID_GITHUB_ENDPOINT"
+	githubUsernameEnvVar = "IDID_GITHUB_USERNAME"
+	githubTokenEnvVar    = "IDID_GITHUB_TOKEN"
 )
 
 type ConfigTestSuite struct {
@@ -22,7 +24,8 @@ func (suite *ConfigTestSuite) TearDownTest() {
 	defer cfgL.Unlock()
 	cfg = nil
 
-	for _, envVar := range []string{storageDirEnvVar, gitEndpointEnvVar} {
+	envVars := []string{storageDirEnvVar, githubEndpointEnvVar, githubUsernameEnvVar, githubTokenEnvVar}
+	for _, envVar := range envVars {
 		os.Unsetenv(envVar)
 	}
 }
@@ -37,7 +40,9 @@ func (suite *ConfigTestSuite) TestDefaults() {
 	})
 
 	assert.Equal("~/.local/share/idid", c.StorageDir)
-	assert.Equal("https://github.com", c.GitEndpoint)
+	assert.Equal("https://github.com", c.GitHub.Endpoint)
+	assert.Equal("", c.GitHub.Username)
+	assert.Equal("", c.GitHub.Token)
 }
 
 func (suite *ConfigTestSuite) TestSetFromEnv() {
@@ -46,7 +51,11 @@ func (suite *ConfigTestSuite) TestSetFromEnv() {
 
 	err := os.Setenv(storageDirEnvVar, "/local/share/idid")
 	require.NoError(err)
-	err = os.Setenv(gitEndpointEnvVar, "https://git.homeserver.com")
+	err = os.Setenv(githubEndpointEnvVar, "https://git.homeserver.com")
+	require.NoError(err)
+	err = os.Setenv(githubUsernameEnvVar, "user")
+	require.NoError(err)
+	err = os.Setenv(githubTokenEnvVar, "token")
 	require.NoError(err)
 
 	var c *Config
@@ -55,7 +64,9 @@ func (suite *ConfigTestSuite) TestSetFromEnv() {
 	})
 
 	assert.Equal("/local/share/idid", c.StorageDir)
-	assert.Equal("https://git.homeserver.com", c.GitEndpoint)
+	assert.Equal("https://git.homeserver.com", c.GitHub.Endpoint)
+	assert.Equal("user", c.GitHub.Username)
+	assert.Equal("token", c.GitHub.Token)
 }
 
 func TestConfigTestSuite(t *testing.T) {
