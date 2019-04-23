@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"os"
 	"strings"
 	"sync"
 
@@ -32,7 +33,7 @@ func Get() *Config {
 	v := viper.New()
 	v.SetEnvPrefix("IDID")
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-	v.SetDefault(storageDir, "~/.local/share/idid")
+	v.SetDefault(storageDir, "$HOME/.local/share/idid")
 	v.SetDefault(githubEndpoint, "https://github.com")
 	v.SetDefault(githubUsername, "")
 	v.SetDefault(githubToken, "")
@@ -44,5 +45,6 @@ func Get() *Config {
 		log.Fatalf("error reading config: %s", err.Error())
 	}
 
+	cfg.StorageDir = os.ExpandEnv(cfg.StorageDir)
 	return cfg
 }
