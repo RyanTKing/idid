@@ -1,9 +1,7 @@
 package store
 
 import (
-	"fmt"
 	"os"
-	"os/user"
 	"testing"
 
 	"github.com/RyanTKing/idid/internal/config"
@@ -33,7 +31,7 @@ func (suite *StoreTestSuite) TearDownTest() {
 func (suite *StoreTestSuite) TestCheckDirectory() {
 	require := suite.Require()
 
-	err := checkDirectory("test/github_com")
+	err := checkDirectory("test")
 	require.NoError(err)
 	_, err = os.Stat(config.Get().StorageDir)
 	require.NoError(err)
@@ -43,12 +41,9 @@ func (suite *StoreTestSuite) TestGetDirectory() {
 	assert := suite.Assert()
 	require := suite.Require()
 
-	usr, err := user.Current()
-	require.NoError(err)
-	expected := fmt.Sprintf("%s/.local/share/idid/github_com", usr.HomeDir)
 	dir, err := getDirectory()
 	require.NoError(err)
-	assert.Equal(expected, dir)
+	assert.Equal("test/github_com", dir)
 }
 
 func TestStoreTestSuite(t *testing.T) {
