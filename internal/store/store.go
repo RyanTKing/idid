@@ -68,30 +68,35 @@ func write(now time.Time, dir, msg string, issueShorthands ...string) error {
 }
 
 // Read reads the messages written in the last 24 hours and returns the entry
-func Read() ([]Entry, error) {
+func Read(sinceDays, sinceMonths int) ([]Entry, error) {
 	now := time.Now()
+	since := now.AddDate(0, -1*sinceMonths, -1*sinceDays)
 	dir, err := getDirectory()
 	if err != nil {
 		return []Entry{}, err
 	}
 
-	return read(now, dir)
+	return read(now, since, dir)
 }
 
-func read(now time.Time, dir string) ([]Entry, error) {
-	path := getPath(now, dir)
-	f, err := os.Open(path)
-	defer f.Close()
+func read(now, since time.Time, dir string) ([]Entry, error) {
 	entries := []Entry{}
-	if os.IsNotExist(err) {
-		return []Entry{}, nil
-	} else if err != nil {
-		return []Entry{}, nil
-	}
+	for t := now; !t.Before(since); t = t.AddDate(0, 0, -1) {
+		path := getPath(t, dir)
+		f, err := os.Open(path)
+		defer f.Close()
+		if os.IsNotExist(err) {
+			continue
+		} else if err != nil {
+			return []Entry{}, err
+		}
 
-	err = json.NewDecoder(f).Decode(&entries)
-	if err != nil {
-		return []Entry{}, err
+		newEntries := []Entry{}
+		err = json.NewDecoder(f).Decode(&newEntries)
+		if err != nil {
+			return []Entry{}, err
+		}
+		entries = append(entries, newEntries...)
 	}
 
 	return entries, nil

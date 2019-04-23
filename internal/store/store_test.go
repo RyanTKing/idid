@@ -106,7 +106,8 @@ func (suite *StoreTestSuite) TestReadWrite() {
 		},
 	}
 
-	foundEntries, err := read(t2, dir)
+	since := t2.AddDate(0, 0, -1)
+	foundEntries, err := read(t2, since, dir)
 	require.NoError(err)
 	assert.Equal(entries, foundEntries)
 }
