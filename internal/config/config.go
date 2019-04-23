@@ -48,3 +48,10 @@ func Get() *Config {
 	cfg.StorageDir = os.ExpandEnv(cfg.StorageDir)
 	return cfg
 }
+
+// Destroy destroys the config so it is reinitialized at next use
+func Destroy() {
+	cfgL.Lock()
+	defer cfgL.Unlock()
+	cfg = nil
+}
