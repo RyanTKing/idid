@@ -16,7 +16,6 @@ type GitTestSuite struct {
 }
 
 func (suite *GitTestSuite) TearDownTest() {
-	gock.RestoreClient(client)
 	gock.Off()
 }
 
@@ -38,7 +37,6 @@ func (suite *GitTestSuite) TestExpandLink() {
 	}
 
 	cfg := config.Get()
-	gock.InterceptClient(client)
 	gock.New(cfg.GitHub.Endpoint).Get("/myorg/myrepo/issues/22").Reply(http.StatusOK)
 	gock.New(cfg.GitHub.Endpoint).Get("/myorg/myrepo/issues/48").
 		Reply(http.StatusFound).AddHeader("Location", "https://github.com/myorg/myrepo/pull/48")
