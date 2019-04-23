@@ -1,7 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"os"
+	"os/user"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -39,7 +41,9 @@ func (suite *ConfigTestSuite) TestDefaults() {
 		c = Get()
 	})
 
-	assert.Equal("~/.local/share/idid", c.StorageDir)
+	usr, err := user.Current()
+	require.NoError(err)
+	assert.Equal(fmt.Sprintf("%s/.local/share/idid", usr.HomeDir), c.StorageDir)
 	assert.Equal("https://github.com", c.GitHub.Endpoint)
 	assert.Equal("", c.GitHub.Username)
 	assert.Equal("", c.GitHub.Token)

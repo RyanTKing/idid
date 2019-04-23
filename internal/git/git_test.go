@@ -8,7 +8,7 @@ import (
 
 	"github.com/RyanTKing/idid/internal/config"
 	"github.com/stretchr/testify/suite"
-	"gopkg.in/h2non/gock.v1"
+	gock "gopkg.in/h2non/gock.v1"
 )
 
 type GitTestSuite struct {
