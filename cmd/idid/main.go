@@ -13,6 +13,7 @@ func die(format string, a ...interface{}) {
 
 func main() {
 	rootCmd.AddCommand(thisCmd)
+	rootCmd.AddCommand(whatCmd)
 	if err := rootCmd.Execute(); err != nil {
 		die("error: %s", err.Error())
 	}
