@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/RyanTKing/idid/internal/entry"
-	"github.com/RyanTKing/idid/internal/git"
 )
 
 // Write writes a message with related issues to the store
@@ -20,10 +19,10 @@ func Write(msg string, issues ...string) error {
 	return write(now, dir, msg, issues...)
 }
 
-func write(now time.Time, dir, msg string, issueShorthands ...string) error {
+func write(now time.Time, dir, msg string, issues ...string) error {
 	path := getPath(now, dir)
 	f, err := os.Open(path)
-	entries := []entry.Entry{}
+	entries := []*entry.Entry{}
 	if err == nil {
 		err := json.NewDecoder(f).Decode(&entries)
 		if err != nil {
@@ -40,22 +39,9 @@ func write(now time.Time, dir, msg string, issueShorthands ...string) error {
 		return err
 	}
 
-	issues := []entry.Issue{}
-	for _, shorthand := range issueShorthands {
-		url, err := git.ExpandLink(shorthand)
-		if err != nil {
-			return err
-		}
-		issue := entry.Issue{
-			Shorthand: shorthand,
-			URL:       url,
-		}
-		issues = append(issues, issue)
-	}
-	entry := entry.Entry{
-		Msg:     msg,
-		Issues:  issues,
-		Created: now,
+	entry, err := entry.New(now, msg, issues...)
+	if err != nil {
+		return err
 	}
 	entries = append(entries, entry)
 

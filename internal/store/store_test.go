@@ -93,6 +93,7 @@ func (suite *StoreTestSuite) TestReadWrite() {
 				entry.Issue{Shorthand: "org1/repo1#1", URL: "https://github.com/org1/repo1/issues/1"},
 			},
 			Created: t,
+			Type:    entry.EntryIssue,
 		},
 		entry.Entry{
 			Msg: "test entry 2",
@@ -100,6 +101,7 @@ func (suite *StoreTestSuite) TestReadWrite() {
 				entry.Issue{Shorthand: "org2/repo2#2", URL: "https://github.com/org2/repo2/pull/2"},
 			},
 			Created: t,
+			Type:    entry.EntryPull,
 		},
 		entry.Entry{
 			Msg: "test entry 3",
@@ -108,6 +110,7 @@ func (suite *StoreTestSuite) TestReadWrite() {
 				entry.Issue{Shorthand: "org3/repo3#4", URL: "https://github.com/org3/repo3/pull/4"},
 			},
 			Created: t,
+			Type:    entry.EntryPull,
 		},
 	}
 

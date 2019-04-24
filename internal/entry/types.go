@@ -2,6 +2,9 @@ package entry
 
 import "time"
 
+// EntryType represents the type of an entry
+type EntryType string
+
 // Issue is a single GitHub issue (or pull request)
 type Issue struct {
 	Shorthand string
@@ -13,4 +16,5 @@ type Entry struct {
 	Msg     string
 	Issues  []Issue
 	Created time.Time
+	Type    EntryType
 }
