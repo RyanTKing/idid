@@ -9,6 +9,7 @@ import (
 	gock "gopkg.in/h2non/gock.v1"
 
 	"github.com/RyanTKing/idid/internal/config"
+	"github.com/RyanTKing/idid/internal/entry"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -85,22 +86,26 @@ func (suite *StoreTestSuite) TestReadWrite() {
 	require.True(gock.IsDone())
 	t2, err := time.Parse(time.RFC822, "23 Apr 19 17:30 EST")
 	require.NoError(err)
-	entries := []Entry{
-		Entry{
-			Msg:     "test entry 1",
-			Issues:  []Issue{Issue{Shorthand: "org1/repo1#1", URL: "https://github.com/org1/repo1/issues/1"}},
+	entries := []entry.Entry{
+		entry.Entry{
+			Msg: "test entry 1",
+			Issues: []entry.Issue{
+				entry.Issue{Shorthand: "org1/repo1#1", URL: "https://github.com/org1/repo1/issues/1"},
+			},
 			Created: t,
 		},
-		Entry{
-			Msg:     "test entry 2",
-			Issues:  []Issue{Issue{Shorthand: "org2/repo2#2", URL: "https://github.com/org2/repo2/pull/2"}},
+		entry.Entry{
+			Msg: "test entry 2",
+			Issues: []entry.Issue{
+				entry.Issue{Shorthand: "org2/repo2#2", URL: "https://github.com/org2/repo2/pull/2"},
+			},
 			Created: t,
 		},
-		Entry{
+		entry.Entry{
 			Msg: "test entry 3",
-			Issues: []Issue{
-				Issue{Shorthand: "org3/repo3#3", URL: "https://github.com/org3/repo3/issues/3"},
-				Issue{Shorthand: "org3/repo3#4", URL: "https://github.com/org3/repo3/pull/4"},
+			Issues: []entry.Issue{
+				entry.Issue{Shorthand: "org3/repo3#3", URL: "https://github.com/org3/repo3/issues/3"},
+				entry.Issue{Shorthand: "org3/repo3#4", URL: "https://github.com/org3/repo3/pull/4"},
 			},
 			Created: t,
 		},
