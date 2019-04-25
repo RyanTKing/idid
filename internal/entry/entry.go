@@ -48,3 +48,22 @@ func New(created time.Time, msg string, issueShorthands ...string) (*Entry, erro
 
 	return entry, nil
 }
+
+func NewClose(created time.Time, shorthand string) (*Entry, error) {
+	url, err := git.ExpandLink(shorthand)
+	if err != nil {
+		return nil, err
+	}
+	issue := Issue{
+		Shorthand: shorthand,
+		URL:       url,
+	}
+	entry := &Entry{
+		Msg:     "closed issue",
+		Issues:  []Issue{issue},
+		Created: created,
+		Type:    EntryClosed,
+	}
+
+	return entry, nil
+}

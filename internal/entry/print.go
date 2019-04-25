@@ -51,8 +51,19 @@ func (e *Entry) printType(w io.Writer) {
 		c = color.New(color.FgWhite)
 	}
 
+	pad := maxTypeLen - len(e.Type)
 	c.Fprint(w, "[")
+	if pad > 0 {
+		for i := 0; i < pad/2; i++ {
+			fmt.Fprintf(w, " ")
+		}
+	}
 	c.Fprint(w, e.Type)
+	if pad > 0 {
+		for i := 0; i < pad/2+pad%2; i++ {
+			fmt.Fprintf(w, " ")
+		}
+	}
 	c.Fprint(w, "]")
 	fmt.Fprint(w, " ")
 }
