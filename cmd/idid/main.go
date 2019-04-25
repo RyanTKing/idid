@@ -15,6 +15,7 @@ func main() {
 	rootCmd.AddCommand(thisCmd)
 	rootCmd.AddCommand(whatCmd)
 	rootCmd.AddCommand(closeCmd)
+	rootCmd.AddCommand(mergeCmd)
 	if err := rootCmd.Execute(); err != nil {
 		die("error: %s", err.Error())
 	}

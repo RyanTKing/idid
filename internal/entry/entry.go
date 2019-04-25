@@ -67,3 +67,22 @@ func NewClose(created time.Time, shorthand string) (*Entry, error) {
 
 	return entry, nil
 }
+
+func NewMerge(created time.Time, shorthand string) (*Entry, error) {
+	url, err := git.ExpandLink(shorthand)
+	if err != nil {
+		return nil, err
+	}
+	issue := Issue{
+		Shorthand: shorthand,
+		URL:       url,
+	}
+	entry := &Entry{
+		Msg:     "merged pull",
+		Issues:  []Issue{issue},
+		Created: created,
+		Type:    EntryMerged,
+	}
+
+	return entry, nil
+}
