@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/RyanTKing/idid/internal/entry"
+	"github.com/ryantking/idid/internal/entry"
 )
 
 // Write writes a message with related issues to the store

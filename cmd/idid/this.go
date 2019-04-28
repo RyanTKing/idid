@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/RyanTKing/idid/internal/store"
+	"github.com/ryantking/idid/internal/store"
 	"github.com/spf13/cobra"
 )
 

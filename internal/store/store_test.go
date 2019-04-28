@@ -8,8 +8,8 @@ import (
 
 	gock "gopkg.in/h2non/gock.v1"
 
-	"github.com/RyanTKing/idid/internal/config"
-	"github.com/RyanTKing/idid/internal/entry"
+	"github.com/ryantking/idid/internal/config"
+	"github.com/ryantking/idid/internal/entry"
 	"github.com/stretchr/testify/suite"
 )
 

@@ -7,7 +7,7 @@ import (
 
 	"os"
 
-	"github.com/RyanTKing/idid/internal/config"
+	"github.com/ryantking/idid/internal/config"
 )
 
 func getPath(now time.Time, dir string) string {

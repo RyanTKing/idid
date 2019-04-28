@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/RyanTKing/idid/internal/config"
+	"github.com/ryantking/idid/internal/config"
 	"github.com/stretchr/testify/suite"
 	gock "gopkg.in/h2non/gock.v1"
 )

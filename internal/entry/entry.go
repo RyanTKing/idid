@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/RyanTKing/idid/internal/git"
+	"github.com/ryantking/idid/internal/git"
 )
 
 // Possible types of entries

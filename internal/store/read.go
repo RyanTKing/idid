@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/RyanTKing/idid/internal/entry"
+	"github.com/ryantking/idid/internal/entry"
 )
 
 // Read reads the messages written in the last 24 hours and returns the entry

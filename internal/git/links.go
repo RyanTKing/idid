@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/RyanTKing/idid/internal/config"
+	"github.com/ryantking/idid/internal/config"
 )
 
 var (
